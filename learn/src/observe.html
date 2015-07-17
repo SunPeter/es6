@@ -1,0 +1,50 @@
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection" />
+    <meta content="email=no" name="format-detection" />
+    <meta name="apple-touch-fullscreen" content="no" />
+    <title></title>
+    <style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="text"></div>
+    <script type="text/javascript">
+    // A user model
+    var user = {
+        id: 0,
+        name: 'Brendan Eich',
+        title: 'Mr.'
+    };
+
+    // Create a greeting for the user
+    function updateGreeting() {
+
+        document.querySelector("#text").innerHTML='Hello, ' + user.title + ' ' + user.name + '!'
+    }
+    updateGreeting();
+
+    Object.observe(user, function(changes) {
+        changes.forEach(function(change) {
+            console.log(change.name+":"+change.object+":"+change.type+":"+change.oldValue)
+            // Any time name or title change, update the greeting
+            if (change.name === 'name' || change.name === 'title') {
+                updateGreeting();
+            }
+        });
+    });
+    </script>
+</body>
+
+</html>
